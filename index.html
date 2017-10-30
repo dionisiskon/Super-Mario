@@ -1,10 +1,12 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Super-Mario</title>
+<title>Super-Mario</title>	
+	<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
 <meta charset="utf-8">
 <style>
 body {
+	font-family: 'Press Start 2P', cursive;
 	margin: 0;
 	padding: 0;
 	background-color: #000;
@@ -21,23 +23,40 @@ body {
 		}, false, false);
 
 		function preload() {
-
+			game.load.audio('maintheme','audio/maintheme1.mp3');
+			game.load.audio('stomp','audio/stomp.mp3');
+			game.load.audio('jump','audio/jump.mp3');
+			game.load.audio('coinsc','audio/coin.mp3');
+			game.load.audio('death','audio/death.mp3');
+			game.load.image('pic','assets/coin.png');
+			game.load.image('live','assets/mariolive.png')
 			//  We need this because the assets are on github pages
 			//  Remove the next 2 lines if running locally
-			this.load.baseURL = 'https://ioniodi.github.io/Super-Mario/';
-			this.load.crossOrigin = 'anonymous';
+			//this.load.baseURL = 'https://ioniodi.github.io/Super-Mario/';
+			//this.load.crossOrigin = 'anonymous';
 
 			this.load.spritesheet('tiles', 'assets/super_mario_tiles.png', 16,
 					16);
 			this.load.spritesheet('goomba', 'assets/goomba.png', 16, 16);
-			this.load.spritesheet('mario', 'assets/mario.png', 16, 16);
-			this.load.spritesheet('coin', 'assets/coin.png', 16, 16);
+			this.load.spritesheet('wario', 'assets/wario.png', 16, 16);
+			this.load.spritesheet('coin', 'assets/cointest1.png', 16, 16);
 
 			this.load.tilemap('level', 'assets/super_mario_map.json', null,
 					Phaser.Tilemap.TILED_JSON);
 		}
+		var music;
+		var scoreText;
+		var ccounter;
+		var cvalue=0;
+		var cimage;
+		//var timer;
+		var limage;
+		var lives=3;
+		var lcounter;
+		var played;
 
 		function create() {
+
 			Phaser.Canvas.setImageRenderingCrisp(game.canvas)
 			game.scale.pageAlignHorizontally = true;
 			game.scale.pageAlignVertically = true
@@ -59,7 +78,7 @@ body {
 			coins.enableBody = true;
 			map.createFromTiles(2, null, 'coin', 'stuff', coins);
 			coins.callAll('animations.add', 'animations', 'spin',
-					[ 0, 0, 1, 2 ], 3, true);
+					[ 0, 0, 1, 2,3,4,5,6,7 ], 10, true);
 			coins.callAll('animations.play', 'animations', 'spin');
 
 			goombas = game.add.group();
@@ -72,19 +91,36 @@ body {
 			goombas.setAll('body.velocity.x', -20);
 			goombas.setAll('body.gravity.y', 500);
 
-			player = game.add.sprite(16, game.world.height - 48, 'mario');
+			player = game.add.sprite(16, game.world.height - 48, 'wario');
 			game.physics.arcade.enable(player);
 			player.body.gravity.y = 370;
 			player.body.collideWorldBounds = true;
 			player.animations.add('walkRight', [ 1, 2, 3 ], 10, true);
 			player.animations.add('walkLeft', [ 8, 9, 10 ], 10, true);
 			player.goesRight = true;
-
 			game.camera.follow(player);
-
+			scoreText=game.add.text(16,8,'WARIO\n'+score,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'} );
+			cimage=game.add.sprite(95,7,'pic');
+			limage=game.add.sprite(170,8,'live');
+			lcounter=game.add.text(189,13,'X'+lives,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'});
+			ccounter=game.add.text(110,13,'X'+cvalue,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'});
+			game.stage.addChild(cimage);
+			game.stage.addChild(scoreText);
+			game.stage.addChild(ccounter);
+			game.stage.addChild(limage);
+			game.stage.addChild(lcounter);
+			//timer=game.add.text(160,8,'TIME',{font:'12px Press Start 2P',fontSize:'12px',fill:'white'});
+			//game.stage.addChild(timer);
 			cursors = game.input.keyboard.createCursorKeys();
+			music=game.add.audio('maintheme');
+			music.loop=true;
+			music.play();
 		}
-
+		var jumps;
+		var stomps;
+		var csound;
+		var deaths;
+		var score=0;
 		function update() {
 			game.physics.arcade.collide(player, layer);
 			game.physics.arcade.collide(goombas, layer);
@@ -107,9 +143,11 @@ body {
 						player.frame = 0;
 					else
 						player.frame = 7;
-				}
+				} 
 
 				if (cursors.up.isDown && player.body.onFloor()) {
+					jumps = game.add.audio('jump');
+		           	        jumps.play();
 					player.body.velocity.y = -190;
 					player.animations.stop();
 				}
@@ -122,8 +160,13 @@ body {
 				}
 			}
 		}
-
 		function coinOverlap(player, coin) {
+			cvalue += 1;
+    		ccounter.text = 'X' + cvalue;
+			csound = game.add.audio('coinsc');
+			score +=100;
+			scoreText.text='WARIO\n'+score;
+			csound.play();
 			coin.kill();
 		}
 
@@ -133,6 +176,10 @@ body {
 				goomba.frame = 2;
 				goomba.body.enable = false;
 				player.body.velocity.y = -80;
+				stomps = game.add.audio('stomp');
+		        stomps.play();
+		        score += 100;
+    			scoreText.text = 'WARIO\n' + score;
 				game.time.events.add(Phaser.Timer.SECOND, function() {
 					goomba.kill();
 				});
@@ -140,8 +187,21 @@ body {
 				player.frame = 6;
 				player.body.enable = false;
 				player.animations.stop();
-				game.time.events.add(Phaser.Timer.SECOND * 3, function() {
+				music.loop=false;
+				music.stop();
+				deaths=game.add.audio('death');
+				deaths.play();
+				lives -= 1;
+    		    lcounter.text = 'X' +lives;
+				if (lives==0)
+				{alert("You have lost all your lives.Try again?");
+				setTimeout(function(){
+				game.state.restart();
+				}, 1000);
+					}
+				game.time.events.add(Phaser.Timer.SECOND * 4, function() {
 					game.paused = true;
+					
 				});
 			}
 		}
