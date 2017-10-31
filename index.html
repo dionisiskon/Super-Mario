@@ -187,9 +187,14 @@ body {
 				music.stop();
 				deaths=game.add.audio('death');
 				deaths.play();
-				lives -= 1;
-    		    		lcounter.text = 'X' +lives;
-				if (lives==0){
+				if(lives>1){
+					setTimeout(function(){
+					score=0;
+					cvalue=0;
+					lives-=1;
+    		    		game.state.start(game.state.current);
+    		   		 }, 4000);
+    					} else {
 				setTimeout(function(){
 				alert("You have lost all your lives.Try again?");
 				location.reload();
