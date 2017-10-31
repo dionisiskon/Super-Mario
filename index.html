@@ -49,11 +49,9 @@ body {
 		var ccounter;
 		var cvalue=0;
 		var cimage;
-		//var timer;
 		var limage;
 		var lives=1;
 		var lcounter;
-		var played;
 
 		function create() {
 
@@ -104,13 +102,11 @@ body {
 			limage=game.add.sprite(170,8,'live');
 			lcounter=game.add.text(189,13,'X'+lives,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'});
 			ccounter=game.add.text(110,13,'X'+cvalue,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'});
-			game.stage.addChild(cimage);
-			game.stage.addChild(scoreText);
-			game.stage.addChild(ccounter);
-			game.stage.addChild(limage);
-			game.stage.addChild(lcounter);
-			//timer=game.add.text(160,8,'TIME',{font:'12px Press Start 2P',fontSize:'12px',fill:'white'});
-			//game.stage.addChild(timer);
+			cimage.fixedToCamera=true;
+			scoreText.fixedToCamera=true;
+			ccounter.fixedToCamera=true;
+			limage.fixedToCamera=true;
+			lcounter.fixedToCamera=true;
 			cursors = game.input.keyboard.createCursorKeys();
 			music=game.add.audio('maintheme');
 			music.loop=true;
