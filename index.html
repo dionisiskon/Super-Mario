@@ -29,7 +29,7 @@ body {
 			game.load.audio('coinsc','audio/coin.mp3');
 			game.load.audio('death','audio/death.mp3');
 			game.load.image('pic','assets/coin1.png');
-			game.load.image('live','assets/mariolive.png')
+			game.load.image('live','assets/mariolive.png');
 			//  We need this because the assets are on github pages
 			//  Remove the next 2 lines if running locally
 			this.load.baseURL = 'https://dionisiskon.github.io/Super-Mario/';
@@ -177,9 +177,9 @@ body {
 				goomba.body.enable = false;
 				player.body.velocity.y = -80;
 				stomps = game.add.audio('stomp');
-		        stomps.play();
-		        score += 100;
-    			scoreText.text = 'WARIO\n' + score;
+		        	stomps.play();
+		        	score += 100;
+    				scoreText.text = 'WARIO\n' + score;
 				game.time.events.add(Phaser.Timer.SECOND, function() {
 					goomba.kill();
 				});
@@ -192,17 +192,12 @@ body {
 				deaths=game.add.audio('death');
 				deaths.play();
 				lives -= 1;
-    		    lcounter.text = 'X' +lives;
-				if (lives==0)
-				{alert("You have lost all your lives.Try again?");
+    		    		lcounter.text = 'X' +lives;
+				if (lives==0){
 				setTimeout(function(){
+				alert("You have lost all your lives.Try again?");
 				game.state.restart();
-				}, 1000);
-					}
-				game.time.events.add(Phaser.Timer.SECOND * 4, function() {
-					game.paused = true;
-					
-				});
+				}, 4000);}
 			}
 		}
 	</script>
