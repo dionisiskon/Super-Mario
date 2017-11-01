@@ -28,7 +28,6 @@ body {
 			game.load.audio('jump','audio/jump.mp3');
 			game.load.audio('coinsc','audio/coin.mp3');
 			game.load.audio('death','audio/death.mp3');
-			game.load.audio('gameovers','audio/gameover.mp3');
 			game.load.image('pic','assets/coin1.png');
 			game.load.image('live','assets/mariolive.png');
 			//  We need this because the assets are on github pages
@@ -117,7 +116,6 @@ body {
 		var stomps;
 		var csound;
 		var deaths;
-		var gover;
 		var score=0;
 		function update() {
 			game.physics.arcade.collide(player, layer);
@@ -196,12 +194,10 @@ body {
     		    		game.state.start(game.state.current);
     		   		 }, 4000);
     					} else {
-				gover=game.add.audio('gameovers');
-				gover.play();
 				setTimeout(function(){
 				alert("You have lost all your lives.Try again?");
 				location.reload();
-				}, 6000);}
+				}, 4000);}
 			}
 		}
 	</script>
