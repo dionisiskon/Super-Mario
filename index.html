@@ -25,17 +25,19 @@ body {
 		}, false, false);
 
 		function preload() {
-			game.load.audio('maintheme','audio/maintheme1.mp3');
-			game.load.audio('stomp','audio/stomp.mp3');
-			game.load.audio('jump','audio/jump.mp3');
-			game.load.audio('coinsc','audio/coin.mp3');
-			game.load.audio('death','audio/death.mp3');
-			game.load.image('pic','assets/coin1.png');
-			game.load.image('live','assets/mariolive.png');
+			this.load.audio('maintheme','audio/maintheme1.mp3');
+			this.load.audio('stomp','audio/stomp.mp3');
+			this.load.audio('jump','audio/jump.mp3');
+			this.load.audio('coinsc','audio/coin.mp3');
+			this.load.audio('death','audio/death.mp3');
+			this.load.image('pic','assets/coin1.png');
+			this.load.image('live','assets/mariolive.png');
+			this.load.image('gpic','assets/goombapic.png');
+			this.load.audio('clearc','audio/courseclear.mp3');
 			//  We need this because the assets are on github pages
 			//  Remove the next 2 lines if running locally
-			this.load.baseURL = 'https://dionisiskon.github.io/Super-Mario/';
-			this.load.crossOrigin = 'anonymous';
+			//this.load.baseURL = 'https://dionisiskon.github.io/Super-Mario/';
+			//this.load.crossOrigin = 'anonymous';
 
 			this.load.spritesheet('tiles', 'assets/super_mario_tiles.png', 16,
 					16);
@@ -54,6 +56,10 @@ body {
 		var limage;
 		var lives=3;
 		var lcounter;
+		var gkill;
+		var gokill=0;
+		var ckill=0;
+		var gimage;
 
 		function create() {
 
@@ -100,10 +106,14 @@ body {
 			player.goesRight = true;
 			game.camera.follow(player);
 			scoreText=game.add.text(16,8,'WARIO\n'+score,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'} );
-			cimage=game.add.sprite(95,7,'pic');
-			limage=game.add.sprite(170,8,'live');
-			lcounter=game.add.text(189,13,'X'+lives,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'});
-			ccounter=game.add.text(110,13,'X'+cvalue,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'});
+			cimage=game.add.sprite(80,7,'pic');
+			limage=game.add.sprite(140,8,'live');
+			lcounter=game.add.text(158,13,'X'+lives,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'});
+			ccounter=game.add.text(98,13,'X'+cvalue,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'});
+			gkill=game.add.text(218,13,'X'+gokill,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'});
+			gimage=game.add.sprite(200,8,'gpic');
+			gimage.fixedToCamera=true;
+			gkill.fixedToCamera=true;
 			cimage.fixedToCamera=true;
 			scoreText.fixedToCamera=true;
 			ccounter.fixedToCamera=true;
@@ -113,12 +123,14 @@ body {
 			music=game.add.audio('maintheme');
 			music.loop=true;
 			music.play();
+			alert("Kill every goomba and get every coin and you win!");
 		}
 		var jumps;
 		var stomps;
 		var csound;
 		var deaths;
-		var score=0;
+		var score=0; 
+		var cclear;
 		function update() {
 			game.physics.arcade.collide(player, layer);
 			game.physics.arcade.collide(goombas, layer);
@@ -165,10 +177,20 @@ body {
 			score +=100;
 			scoreText.text='WARIO\n'+score;
 			csound.play();
+			ckill=ckill+1;
+			if (gokill==16 && ckill==50 ){
+						music.stop();
+    					cclear=game.add.audio('clearc');
+    					cclear.play();
+    					setTimeout(function(){
+    					alert("You have killed every enemy.You win!Wanna play again?")
+						location.reload();
+						 }, 4000);
+    				}
 			coin.kill();
 		}
 
-		function goombaOverlap(player, goomba) {
+		function goombaOverlap(player, goomba) {		
 			if (player.body.touching.down) {
 				goomba.animations.stop();
 				goomba.frame = 2;
@@ -178,10 +200,13 @@ body {
 		        	stomps.play();
 		        	score += 100;
     				scoreText.text = 'WARIO\n' + score;
+    				gokill=gokill+1;
+    				gkill.text='X' + gokill; 
 				game.time.events.add(Phaser.Timer.SECOND, function() {
 					goomba.kill();
 				});
-			} else {
+									}
+			 else {
 				player.frame = 6;
 				player.body.enable = false;
 				player.animations.stop();
@@ -193,6 +218,8 @@ body {
 					score=0;
 					cvalue=0;
 					lives-=1;
+					gokill=0;
+					ckill=0;
     		    		game.state.start(game.state.current);
     		   		 }, 4000);
     					} else {
