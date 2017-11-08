@@ -182,9 +182,18 @@ body {
 				player.frame = 6;
 				player.body.enable = false;
 				player.animations.stop();
-				game.time.events.add(Phaser.Timer.SECOND * 0.5, function() {
-					game.paused = true;
-				});
+                
+				if(lives>1){
+					setTimeout(function(){
+					score=0;
+					lives-=1;				
+    		    		game.state.start(game.state.current);
+    		   		 }, 3500);
+    					} else {
+				setTimeout(function(){
+				alert("You LOSE! Try again!!");
+				location.reload();
+				}, 3500);}
 			}
 		}
 	</script>
