@@ -116,8 +116,8 @@ body {
 			game.physics.arcade.enable(player);
 			player.body.gravity.y = 370;
 			player.body.collideWorldBounds = true;
-			player.animations.add('walkRight', [1, 2 , 6 , 7 , 8 ], 7, true);
-			player.animations.add('walkLeft', [ 10, 11 , 15 , 16 , 17 ],7, true);
+			player.animations.add('walkRight', [1, 2 ], 10, true);
+			player.animations.add('walkLeft', [ 10, 11 ],10, true);
 			player.animations.add('tp',[4,4,4,4],4,true);
 			player.goesRight = true;
 			game.camera.follow(player);
@@ -192,13 +192,13 @@ body {
 		}
 
 		function pipesOverlap(player,pipes){
- 	if (cursors.down.isDown && (player.body.onFloor())) {
- 		player.body.enable=false;
- 		player.animations.play('tp');
- 		game.time.events.add(Phaser.Timer.SECOND*1.2 , function() {
- 					player.body.enable=true;
- 					player.reset(1720,170);
- 					});
+ 		if (cursors.down.isDown && (player.body.onFloor())) {
+ 			player.body.enable=false;
+ 			player.animations.play('tp');
+ 			game.time.events.add(Phaser.Timer.SECOND*1.3 , function() {
+ 				player.body.enable=true;
+ 				player.reset(1720,170);
+ 		});
  	}
  }
 		function coinOverlap(player, coin) {
