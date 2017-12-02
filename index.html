@@ -36,8 +36,8 @@ body {
 			this.load.audio('clearc','audio/courseclear.mp3');
 			//  We need this because the assets are on github pages
 			//  Remove the next 2 lines if running locally
-			this.load.baseURL = 'https://dionisiskon.github.io/Super-Mario/';
-			this.load.crossOrigin = 'anonymous';
+			//this.load.baseURL = 'https://dionisiskon.github.io/Super-Mario/';
+			//this.load.crossOrigin = 'anonymous';
 
 			this.load.spritesheet('tiles', 'assets/newtiles.png', 16,
 					16);
@@ -75,8 +75,13 @@ body {
 			map = game.add.tilemap('level');
 			map.addTilesetImage('tiles', 'tiles');
 			map.setCollisionBetween(3, 12, true, 'solid');
+			map.setCollisionBetween(3, 12, true, 'pipes');
+
+
 
 			map.createLayer('background');
+			pipes = map.createLayer('pipes');
+			pipes.resizeWorld();
 
 			layer = map.createLayer('solid');
 			layer.resizeWorld();
@@ -111,17 +116,18 @@ body {
 			game.physics.arcade.enable(player);
 			player.body.gravity.y = 370;
 			player.body.collideWorldBounds = true;
-			player.animations.add('walkRight', [1, 2 ], 10, true);
-			player.animations.add('walkLeft', [ 10, 11 ], 10, true);
+			player.animations.add('walkRight', [1, 2 , 6 , 7 , 8 ], 10, true);
+			player.animations.add('walkLeft', [ 10, 11 , 15 , 16 , 17 ], 10, true);
+			player.animations.add('tp',[4,4,4,4],4,true);
 			player.goesRight = true;
 			game.camera.follow(player);
-			scoreText=game.add.text(16,18,'WARIO\n'+score,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'} );
-			cimage=game.add.sprite(80,18,'pic');
-			limage=game.add.sprite(140,18,'live');
-			lcounter=game.add.text(158,18,'X'+lives,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'});
-			ccounter=game.add.text(98,18,'X'+cvalue,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'});
-			gkill=game.add.text(218,18,'X'+gokill,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'});
-			gimage=game.add.sprite(200,18,'gpic');
+			scoreText=game.add.text(16,8,'WARIO\n'+score,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'} );
+			cimage=game.add.sprite(80,7,'pic');
+			limage=game.add.sprite(140,8,'live');
+			lcounter=game.add.text(158,13,'X'+lives,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'});
+			ccounter=game.add.text(98,13,'X'+cvalue,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'});
+			gkill=game.add.text(218,13,'X'+gokill,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'});
+			gimage=game.add.sprite(200,8,'gpic');
 			gimage.fixedToCamera=true;
 			gkill.fixedToCamera=true;
 			cimage.fixedToCamera=true;
@@ -150,6 +156,7 @@ body {
 			game.physics.arcade.collide(pyroguys, layer);
 			game.physics.arcade.overlap(player, pyroguys, pyroguyOverlap);
 			game.physics.arcade.overlap(player, coins, coinOverlap);
+			game.physics.arcade.collide(player,pipes,pipesOverlap);
 			if (player.body.enable) {
 				player.body.velocity.x = 0;
 				if (cursors.left.isDown) {
@@ -183,6 +190,17 @@ body {
 				}
 			}
 		}
+
+		function pipesOverlap(player,pipes){
+ 	if (cursors.down.isDown && (player.body.onFloor())) {
+ 		player.body.enable=false;
+ 		player.animations.play('tp');
+ 		game.time.events.add(Phaser.Timer.SECOND*1.2 , function() {
+ 					player.body.enable=true;
+ 					player.reset(1720,170);
+ 					});
+ 	}
+ }
 		function coinOverlap(player, coin) {
 			cvalue += 1;
     		ccounter.text = 'X' + cvalue;
