@@ -61,7 +61,7 @@ var state1= {
 			pyroguys.enableBody=true;
 			map.createFromTiles(22,null,'pyroguys','stuff',pyroguys);
 			pyroguys.callAll('animations.add', 'animations', 'walkLeft', [ 5,6 ],4, true);
-			pyroguys.callAll('animations.add','animations' ,' walkRight',[14,13],4,true);
+			pyroguys.callAll('animations.add','animations' ,' walkRight',[10,11],4,true);
 			pyroguys.callAll('animations.play', 'animations', 'walkLeft');
 			pyroguys.setAll('body.bounce.x', 1);
 			pyroguys.setAll('body.velocity.x', -30);
