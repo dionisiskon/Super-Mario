@@ -104,7 +104,7 @@ var state1= {
 			game.physics.arcade.overlap(player, coins, coinOverlap);
 			game.physics.arcade.collide(player,pipes,pipesOverlap);
 			game.physics.arcade.collide(pyroguys,pipes);
-			game.physics.arcade.overlap(pyroguys,layer,pyroguysDirection);
+			game.physics.arcade.overlap(pyroguys,pipes,pyroguysDirection);
 			if (player.body.enable) {
 				player.body.velocity.x = 0;
 				if (cursors.left.isDown) {
