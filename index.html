@@ -116,15 +116,16 @@ body {
 			}
 		}
 		function pyroguysDirection(pyroguys,layer){
-		if (pyroguys.body.position.x - pyroguys.body.prev.x <= 0){					
+		if (pyroguys.body.position.x - pyroguys.body.prev.x > 0){					
 			pyroguys.animations.play('walkRight');
 			}
-			else{
+		else{									
 			pyroguys.animations.play('walkLeft');
-			}
+
+
+		 }
 		}
 	
- 
 
 		function goombaOverlap(player, goomba) {		
 			if (player.body.touching.down) {
