@@ -34,6 +34,7 @@ body {
 			this.load.image('live','assets/mariolive.png');
 			this.load.image('gpic','assets/goombapic.png');
 			this.load.audio('clearc','audio/courseclear.mp3');
+			this.load.audio('tps','audio/warp.mp3');
 			//  We need this because the assets are on github pages
 			//  Remove the next 2 lines if running locally
 			this.load.baseURL = 'https://dionisiskon.github.io/Super-Mario/';
@@ -61,6 +62,13 @@ body {
 		var gokill=0;
 		var ckill=0;
 		var gimage;
+		var jumps;
+		var stomps;
+		var csound;
+		var deaths;
+		var score=0; 
+		var cclear;
+		var warps;
 
 		function create() {
 
@@ -143,12 +151,6 @@ body {
 			alert("Kill every goomba and get every coin and you win!");
 			}
 		}
-		var jumps;
-		var stomps;
-		var csound;
-		var deaths;
-		var score=0; 
-		var cclear;
 		function update() {
 			game.physics.arcade.collide(player, layer);
 			game.physics.arcade.collide(goombas, layer);
@@ -197,6 +199,8 @@ body {
  		if (cursors.down.isDown && (player.body.onFloor())) {
  			player.body.enable=false;
  			player.animations.play('tp');
+			warps=this.add.audio('tps');
+			warps.play();
  			game.time.events.add(Phaser.Timer.SECOND*1.3 , function() {
  				player.body.enable=true;
  				player.reset(1720,170);
