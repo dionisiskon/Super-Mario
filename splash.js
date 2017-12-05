@@ -15,7 +15,6 @@ var splash= {
 		//background.anchor.set(0.5,0.5);
 
 		var menu = game.add.sprite(100,70, 'logo');
-		menu.anchor.set(0.5,0.5);
 
 		var button1 = game.add.button(100 , 150, "lvl1", function(){
 			game.state.start('state1');
