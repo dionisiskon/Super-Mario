@@ -19,9 +19,6 @@ var splash= {
 		var button1 = game.add.button(100 , 150, "lvl1", function(){
 			game.state.start('state1');
 		});
-		//var button2 = game.add.button(100 , 150, "options", function(){
-		//	game.state.start('options');
-		//});
 		button1.anchor.set(0.5, 0.5);
 
 	}
