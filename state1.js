@@ -9,6 +9,7 @@ var state1= {
 			this.load.image('live','assets/mariolive.png');
 			this.load.image('gpic','assets/goombapic.png');
 			this.load.audio('clearc','audio/courseclear.mp3');
+			this.load.audio('tps','audio/warp.mp3');
 
 			this.load.spritesheet('tiles', 'assets/newtiles.png', 16,
 					16);
