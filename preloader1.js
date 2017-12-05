@@ -12,7 +12,7 @@ var preloader1={
 	this.load.spritesheet('tiles', 'assets/newtiles.png', 16,
 					16);
 	this.load.spritesheet('goomba', 'assets/goomba.png', 16, 16);
-	this.load.spritesheet('mario', 'assets/1234.png', 16, 16);
+	this.load.spritesheet('mario', 'assets/supermario2.png', 16, 16);
 	this.load.spritesheet('coin', 'assets/cointest1.png', 16, 16);
 	this.load.spritesheet('pyroguys','assets/shyguy13.png',16,16);
 
