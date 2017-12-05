@@ -199,7 +199,7 @@ body {
  		if (cursors.down.isDown && (player.body.onFloor())) {
  			player.body.enable=false;
  			player.animations.play('tp');
-			warps=this.add.audio('tps');
+			warps=game.add.audio('tps');
 			warps.play();
  			game.time.events.add(Phaser.Timer.SECOND*1.3 , function() {
  				player.body.enable=true;
