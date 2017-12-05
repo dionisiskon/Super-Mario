@@ -14,7 +14,7 @@ var state1= {
 			this.load.spritesheet('tiles', 'assets/newtiles.png', 16,
 					16);
 			this.load.spritesheet('goomba', 'assets/goomba.png', 16, 16);
-			this.load.spritesheet('mario', 'assets/1234.png', 16, 16);
+			this.load.spritesheet('mario', 'assets/supermario2.png', 16, 16);
 			this.load.spritesheet('coin', 'assets/cointest1.png', 16, 16);
 			this.load.spritesheet('pyroguys','assets/shyguy13.png',16,16);
 
@@ -73,7 +73,7 @@ var state1= {
 			player.body.collideWorldBounds = true;
 			player.animations.add('walkRight', [1, 2 ], 10, true);
 			player.animations.add('walkLeft', [ 10, 11 ],10, true);
-			player.animations.add('tp',[4,4,4,4],4,true);
+			player.animations.add('tp',[18,18,19,19,20,20,21,21,22,22,23,23,24],10,true);
 			player.goesRight = true;
 			game.camera.follow(player);
 			scoreText=game.add.text(16,8,'WARIO\n'+score,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'} );
