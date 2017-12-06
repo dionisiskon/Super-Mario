@@ -88,7 +88,7 @@ body {
 				pyroguy.body.enable = false;
 				player.body.velocity.y = -80;
 				stomps = game.add.audio('stomp');
-		        stomps.play();
+		       		stomps.play();
 				game.time.events.add(Phaser.Timer.SECOND, function() {
 					pyroguy.kill();
 				});
@@ -107,11 +107,11 @@ body {
 				lives-=1;
 				gokill=0;
 				ckill=0;
-    		    		game.state.start('splash');
+    		    		game.state.start('state1');
     		   		 }, 4000);
     					} else {
 				setTimeout(function(){
-				location.reload();
+				game.state.start('splash');
 				}, 4000);}
 			}
 		}
@@ -157,7 +157,7 @@ body {
 					lives-=1;
 					gokill=0;
 					ckill=0;
-    		    		game.state.start('game.state.current');
+    		    		game.state.start('state1');
     		   		 }, 4000);
     					} else {
 				setTimeout(function(){
