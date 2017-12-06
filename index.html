@@ -52,11 +52,10 @@ body {
 			this.load.audio('stomp','audio/stomp.wav');
             this.load.audio('background','audio/bgm.mp3');
             this.load.audio('dead','audio/dead.mp3');
-			
-			
-			
-			
-		}
+			}
+		game.state.add('Menu', Menu);
+		game.state.start('Menu');
+		
 		function create() {
 			Phaser.Canvas.setImageRenderingCrisp(game.canvas);
 			game.scale.pageAlignHorizontally = true;
