@@ -20,7 +20,7 @@ var Menu = {
 
 			var StageText = game.add.text(38, 150, 'Stage1', {fontSize: '12px', fill: '#000'});
 			var click1 = game.add.button(60, 197, 'Stage1', function() {
-			game.state.start('Stage1');
+			game.state.start('index.html');
 			tm.stop();
 		});
 		click1.anchor.set(0.5, 0.5);
