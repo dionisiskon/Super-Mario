@@ -10,6 +10,7 @@ var state1= {
  	this.load.image('gpic','assets/goombapic.png');
  	this.load.audio('clearc','audio/courseclear.mp3');
 	this.load.audio('tps','audio/warp.mp3');
+	//this.load.audio('win','audio/finished.mp3');
  
  	this.load.spritesheet('tiles', 'assets/newtiles.png', 16,
  					16);
@@ -24,15 +25,14 @@ var state1= {
 
 		create: function() {
 
-			Phaser.Canvas.setImageRenderingCrisp(game.canvas)
+			Phaser.Canvas.setImageRenderingCrisp(game.canvas);
 			game.stage.backgroundColor = '#0000';
 
 			map = game.add.tilemap('level');
 			map.addTilesetImage('tiles', 'tiles');
 			map.setCollisionBetween(3, 12, true, 'solid');
 			map.setCollisionBetween(3, 12, true, 'pipes');
-
-
+			map.setCollisionBetween(29,44,true,'flag');
 
 			map.createLayer('background');
 			pipes = map.createLayer('pipes');
@@ -40,6 +40,9 @@ var state1= {
 
 			layer = map.createLayer('solid');
 			layer.resizeWorld();
+
+			flag=map.createLayer('flag');
+			flag.resizeWorld();
 
 			coins = game.add.group();
 			coins.enableBody = true;
@@ -76,7 +79,7 @@ var state1= {
 			player.animations.add('tp',[18,18,19,19,20,20,21,21,22,22,23,23,24],10,true);
 			player.goesRight = true;
 			game.camera.follow(player);
-			scoreText=game.add.text(16,8,'WARIO\n'+score,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'} );
+			scoreText=game.add.text(16,8,'MARIO\n'+score,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'} );
 			cimage=game.add.sprite(80,7,'pic');
 			limage=game.add.sprite(140,8,'live');
 			lcounter=game.add.text(158,13,'X'+lives,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'});
@@ -105,6 +108,7 @@ var state1= {
 			game.physics.arcade.collide(player,pipes,pipesOverlap);
 			game.physics.arcade.collide(pyroguys,pipes);
 			game.physics.arcade.overlap(pyroguys,pipes,pyroguysDirection);
+			game.physics.arcade.collide(player,flag,flagOverlap);
 			if (player.body.enable) {
 				player.body.velocity.x = 0;
 				if (cursors.left.isDown) {

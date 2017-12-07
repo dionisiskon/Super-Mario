@@ -16,16 +16,15 @@ body {
 </style>
 <script src="splash.js"></script>
 <script src="state1.js"></script>
-<script src="preloader1.js"></script>
 <script src="options.js"></script>
-<script src="//cdn.jsdelivr.net/phaser/2.6.2/phaser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/phaser-ce/2.9.2/phaser.min.js"></script>
 </head>
 <body>
 	<script type="text/javascript">
-		var game = new Phaser.Game(256, 240, Phaser.AUTO, '',this, false, false);
+		var game = new Phaser.Game(300, 250, Phaser.AUTO, '',this, false, false);
 		function preload(){
-			this.load.baseURL = 'https://dionisiskon.github.io/Super-Mario/';
-			this.load.crossOrigin = 'anonymous';
+			//this.load.baseURL = 'https://dionisiskon.github.io/Super-Mario/';
+			//this.load.crossOrigin = 'anonymous';
 		}
 		var music;
 		var scoreText;
@@ -46,6 +45,8 @@ body {
 		var score=0; 
 		var cclear;
 		var warps;
+		var wontext;
+		var won;
 
 		game.state.add('state1', state1);
 		game.state.add('splash',splash);
@@ -68,17 +69,9 @@ body {
     		ccounter.text = 'X' + cvalue;
 			csound = game.add.audio('coinsc');
 			score +=100;
-			scoreText.text='WARIO\n'+score;
+			scoreText.text='MARIO\n'+score;
 			csound.play();
 			ckill=ckill+1;
-			if (gokill==16 && ckill==50 ){
-						music.stop();
-    					cclear=game.add.audio('clearc');
-    					cclear.play();
-    					setTimeout(function(){
-						game.state.start('splash');
-						 }, 4000);
-    				}
 			coin.kill();
 		}
 		function pyroguyOverlap(player, pyroguy) {		
@@ -136,7 +129,7 @@ body {
 				stomps = game.add.audio('stomp');
 		        	stomps.play();
 		        	score += 100;
-    				scoreText.text = 'WARIO\n' + score;
+    				scoreText.text = 'MARIO\n' + score;
     				gokill=gokill+1;
     				gkill.text='X' + gokill; 
 				game.time.events.add(Phaser.Timer.SECOND, function() {
@@ -165,6 +158,47 @@ body {
 				}, 4000);}
 			}
 		}
+		var played=0;
+		function flagOverlap(player,flag){
+			clearc=game.add.audio('clearc');
+			if (played==0){
+		 if (player.body.touching.up){
+		 		wontext=game.add.text(50,50,'YOU WON!',{font:'15px Press Start 2P' ,fontSize: '20px', fill: 'white'} );
+		 		wontext.fixedToCamera=true;
+		 		music.stop();
+		 		clearc.play();
+				setTimeout(function(){
+				game.state.start('splash');
+				}, 8000);
+			}else if (player.body.touching.right){
+				wontext=game.add.text(50,50,'YOU WON!',{font:'15px Press Start 2P' ,fontSize: '20px', fill: 'white'} );
+				wontext.fixedToCamera=true;
+				music.stop();
+				clearc.play();
+				setTimeout(function(){
+				game.state.start('splash');
+				}, 8000);
+			}else if (player.body.touching.left){
+				wontext=game.add.text(50,50,'YOU WON!',{font:'15px Press Start 2P' ,fontSize: '20px', fill: 'white'} );
+				wontext.fixedToCamera=true;		
+				music.stop();
+				clearc.play();
+				setTimeout(function(){
+				game.state.start('splash');
+				}, 8000);
+			}else
+			    wontext=game.add.text(50,50,'YOU WON!',{font:'15px Press Start 2P' ,fontSize: '20px', fill: 'white'} );
+			    wontext.fixedToCamera=true;
+				music.stop();
+				clearc.play();
+				setTimeout(function(){
+				game.state.start('splash');
+				}, 8000);
+				played +=1;}
+
+		}
+
+
 	</script>
 </body>
 </html>
