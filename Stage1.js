@@ -99,6 +99,7 @@ var Stage1 = {
 		},
 		
 		update: function( {
+			game.physics.arcade.collide(player,pipe,pipeOverlap);
 			game.physics.arcade.collide(player, layer);
 			game.physics.arcade.collide(goombas, layer);
             game.physics.arcade.collide(squirtle, layer);
