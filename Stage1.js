@@ -22,11 +22,18 @@ var Stage1 = {
 			
 			create: function() {
 			Phaser.Canvas.setImageRenderingCrisp(game.canvas);
+			game.scale.pageAlignHorizontally = true;
+			game.scale.pageAlignVertically = true
+			game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+			game.physics.startSystem(Phaser.Physics.ARCADE);
 			game.stage.backgroundColor = '#5c94fc';
 			map = game.add.tilemap('level');
 			map.addTilesetImage('tiles', 'tiles');
 			map.setCollisionBetween(3, 12, true, 'solid');
+            map.setCollisionBetween(3, 12, true, 'pipe');
 			map.createLayer('background');
+            pipe = map.createLayer('pipe');
+            pipe.resizeWorld();
 			layer = map.createLayer('solid');
 			layer.resizeWorld();
 			coins = game.add.group();
@@ -58,6 +65,7 @@ var Stage1 = {
 			game.physics.arcade.enable(player);
 			player.body.gravity.y = 370;
 			player.body.collideWorldBounds = true;
+            player.animations.add('Teleport', [10],10,false);
 			player.animations.add('walkRight', [ 1, 2, 3 ], 10, true);
 			player.animations.add('walkLeft', [ 8, 9, 10 ], 10, true);
 			player.goesRight = true;
@@ -86,6 +94,7 @@ var Stage1 = {
             
    			game.camera.follow(player);
 			cursors = game.input.keyboard.createCursorKeys();
+            
             
 		},
 		
