@@ -39,6 +39,17 @@ body {
 		game.state.start('Menu');
 		
 		
+		function pipeOverlap(player,pipe){
+	if (cursors.down.isDown && (player.body.onFloor())) {
+		player.animations.play('Teleport');
+		player.body.enable=false;
+		game.time.events.add(Phaser.Timer.SECOND*1.2 , function() {
+					player.body.enable=true;
+					player.reset(1495,150);
+					});
+	}
+}
+		
 		function squirtleOverlap(player, squirtle) {
 			if (player.body.touching.down) {
 				squirtle.animations.stop();
