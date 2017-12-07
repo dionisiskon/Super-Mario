@@ -1,6 +1,6 @@
 var Stage1 = {
 
-	function preload() {
+	preload: function() {
 			
 			
 			this.load.spritesheet('tiles', 'assets/super_mario_tiles.png', 16,
@@ -20,7 +20,7 @@ var Stage1 = {
             this.load.audio('dead','audio/dead.mp3');
 			},
 			
-			unction create() {
+			create: function() {
 			Phaser.Canvas.setImageRenderingCrisp(game.canvas);
 			game.scale.pageAlignHorizontally = true;
 			game.scale.pageAlignVertically = true
@@ -93,7 +93,7 @@ var Stage1 = {
             
 		},
 		
-		function update() {
+		update: function( {
 			game.physics.arcade.collide(player, layer);
 			game.physics.arcade.collide(goombas, layer);
             game.physics.arcade.collide(squirtle, layer);
