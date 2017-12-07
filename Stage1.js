@@ -22,10 +22,6 @@ var Stage1 = {
 			
 			create: function() {
 			Phaser.Canvas.setImageRenderingCrisp(game.canvas);
-			game.scale.pageAlignHorizontally = true;
-			game.scale.pageAlignVertically = true
-			game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-			game.physics.startSystem(Phaser.Physics.ARCADE);
 			game.stage.backgroundColor = '#5c94fc';
 			map = game.add.tilemap('level');
 			map.addTilesetImage('tiles', 'tiles');
