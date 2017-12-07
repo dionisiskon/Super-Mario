@@ -10,7 +10,7 @@ var Stage1 = {
 			this.load.spritesheet('coin', 'assets/coin.png', 16, 16);
             this.load.image('live','assets/mariolive.png');
             this.load.spritesheet('squirtle', 'assets/squirtle.png',16, 16);
-			this.load.tilemap('level', 'assets/super_mario_map_new.json', null,
+			this.load.tilemap('level', 'assets/super_mario_map_new1.json', null,
 					Phaser.Tilemap.TILED_JSON);
             //game sound
 			this.load.audio('jump','audio/jump.wav');
