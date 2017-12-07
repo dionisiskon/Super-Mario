@@ -25,18 +25,19 @@ body {
 			this.load.crossOrigin = 'anonymous';
 			}
 		
-			var tm;
-			//instert score
+		var tm;
+		//instert score
            	var score = 0;
-			var scoreText;
-            //instert lives
-            var lives=3;
-            var limage;
-            var lcounter;
+		var scoreText;
+            	//instert lives
+            	var lives=3;
+            	var limage;
+            	var lcounter;
             
-        game.state.add('Stage1', Stage1);
+       	 	game.state.add('Stage1', Stage1);
 		game.state.add('Menu', Menu);
 		game.state.start('Menu');
+		game.state.start('Stage1');
 		
 		function squirtleOverlap(player, squirtle) {
 			if (player.body.touching.down) {
