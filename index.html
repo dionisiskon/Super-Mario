@@ -117,9 +117,7 @@ body {
 
 
 		 }
-		}
-	
-
+		}	 
 		function goombaOverlap(player, goomba) {		
 			if (player.body.touching.down) {
 				goomba.animations.stop();
@@ -158,39 +156,43 @@ body {
 				}, 4000);}
 			}
 		}
+		function text(){
+			wontext=game.add.text(50,50,'YOU WON!',{font:'15px Press Start 2P' ,fontSize: '20px', fill: 'white'} );
+		 	wontext.fixedToCamera=true;
+        		clearc.play();
+			setTimeout(function(){
+				game.camera.fade('#000000');
+			},5000);
+		}
 		var played=0;
 		function flagOverlap(player,flag){
 			clearc=game.add.audio('clearc');
 			if (played==0){
 		 if (player.body.touching.up){
-		 		wontext=game.add.text(50,50,'YOU WON!',{font:'15px Press Start 2P' ,fontSize: '20px', fill: 'white'} );
-		 		wontext.fixedToCamera=true;
 		 		music.stop();
 		 		clearc.play();
+			 	text();
 				setTimeout(function(){
 				game.state.start('splash');
 				}, 8000);
 			}else if (player.body.touching.right){
-				wontext=game.add.text(50,50,'YOU WON!',{font:'15px Press Start 2P' ,fontSize: '20px', fill: 'white'} );
-				wontext.fixedToCamera=true;
 				music.stop();
 				clearc.play();
+				text();
 				setTimeout(function(){
 				game.state.start('splash');
 				}, 8000);
-			}else if (player.body.touching.left){
-				wontext=game.add.text(50,50,'YOU WON!',{font:'15px Press Start 2P' ,fontSize: '20px', fill: 'white'} );
-				wontext.fixedToCamera=true;		
+			}else if (player.body.touching.left){		
 				music.stop();
 				clearc.play();
+				text();
 				setTimeout(function(){
 				game.state.start('splash');
 				}, 8000);
 			}else
-			    wontext=game.add.text(50,50,'YOU WON!',{font:'15px Press Start 2P' ,fontSize: '20px', fill: 'white'} );
-			    wontext.fixedToCamera=true;
 				music.stop();
 				clearc.play();
+				text();
 				setTimeout(function(){
 				game.state.start('splash');
 				}, 8000);
