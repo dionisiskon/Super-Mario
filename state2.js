@@ -1,4 +1,4 @@
-var state1= {
+var state2= {
 	preload: function() {
 	this.load.audio('maintheme','audio/maintheme1.mp3');
 	this.load.audio('stomp','audio/stomp.mp3');
@@ -15,21 +15,21 @@ var state1= {
  	this.load.spritesheet('tiles', 'assets/newtiles.png', 16,
  					16);
  	this.load.spritesheet('goomba', 'assets/goomba.png', 16, 16);
- 	this.load.spritesheet('mario', 'assets/supermario2.png', 16, 16);
+ 	this.load.spritesheet('luigi', 'assets/luigi.png', 16, 16);
  	this.load.spritesheet('coin', 'assets/cointest1.png', 16, 16);
  	this.load.spritesheet('pyroguys','assets/shyguy13.png',16,16);
  
- 	this.load.tilemap('level', 'assets/2016178.json', null,
+ 	this.load.tilemap('level2', 'assets/pista2.json', null,
  					Phaser.Tilemap.TILED_JSON);
 		},
 
 		create: function() {
 				this.camera.flash('#000000');
-					s=1;
+					s=2;
 			Phaser.Canvas.setImageRenderingCrisp(game.canvas);
 			game.stage.backgroundColor = '#0000';
 
-			map = game.add.tilemap('level');
+			map = game.add.tilemap('level2');
 			map.addTilesetImage('tiles', 'tiles');
 			map.setCollisionBetween(3, 12, true, 'solid');
 			map.setCollisionBetween(3, 12, true, 'pipes');
@@ -40,7 +40,7 @@ var state1= {
 			pipes.resizeWorld();
 
 			layer = map.createLayer('solid');
-			layer.resizeWorld();
+			layer.resizeWorld(); 
 
 			flag=map.createLayer('flag');
 			flag.resizeWorld();
@@ -71,22 +71,25 @@ var state1= {
 			pyroguys.setAll('body.velocity.x', -30);
 			pyroguys.setAll('body.gravity.y', 500);
 
-			player = game.add.sprite(16, game.world.height - 48, 'mario');
+			player = game.add.sprite(16, game.world.height - 48, 'luigi');
 			game.physics.arcade.enable(player);
 			player.body.gravity.y = 370;
 			player.body.collideWorldBounds = true;
-			player.animations.add('walkRight', [1, 2 ], 10, true);
-			player.animations.add('walkLeft', [ 10, 11 ],10, true);
-			player.animations.add('tp',[18,19,20,21,21,22,23,24],6,true);
+			player.animations.add('walkRight', [1,2 ], 10, true);
+			player.animations.add('walkLeft', [ 8,9 ],10, true);
+			player.animations.add('tp',[1,1,1,1,1,1],10,true);
 			player.goesRight = true;
 			game.camera.follow(player);
-			scoreText=game.add.text(16,8,'MARIO\n'+score,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'} );
+			scoreText=game.add.text(16,8,'LUIGI\n'+score,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'} );
 			cimage=game.add.sprite(120,7,'pic');
 			limage=game.add.sprite(200,8,'live');
 			lcounter=game.add.text(218,13,'X'+lives,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'});
 			ccounter=game.add.text(133,13,'X'+cvalue,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'});
+			//gkill=game.add.text(218,13,'X'+gokill,{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'});
 			gametext=game.add.text(0,73,'Press the cursor\n keys to move.\nTouch the flag\n and you win!',{font:'15px Press Start 2P' ,fontSize: '8px', fill: 'white'});
-			tptext=game.add.text(380,110,'This is a teleport pipe.\nPress the down button\n and see what happens!',{font:'15px Press Start 2P',fontSize:'8px',fill:'white'});
+			//gimage=game.add.sprite(200,8,'gpic');
+			//gimage.fixedToCamera=true;
+			//gkill.fixedToCamera=true;
 			cimage.fixedToCamera=true;
 			scoreText.fixedToCamera=true;
 			ccounter.fixedToCamera=true;
@@ -107,7 +110,7 @@ var state1= {
 			game.physics.arcade.collide(player,pipes,pipesOverlap);
 			game.physics.arcade.collide(pyroguys,pipes);
 			game.physics.arcade.overlap(pyroguys,pipes,pyroguysDirection);
-			game.physics.arcade.collide(player,flag,flagOverlap);
+			//game.physics.arcade.collide(player,flag,flagOverlap);
 			if (player.body.enable) {
 				player.body.velocity.x = 0;
 				if (cursors.left.isDown) {
@@ -135,10 +138,11 @@ var state1= {
 
 				if (player.body.velocity.y != 0) {
 					if (player.goesRight)
-						player.frame = 4;
+						player.frame = 5;
 					else
-						player.frame = 13;
+						player.frame = 12;
 				}
 			}
 		}
 	}
+

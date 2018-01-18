@@ -16,15 +16,15 @@ body {
 </style>
 <script src="splash.js"></script>
 <script src="state1.js"></script>
-<script src="options.js"></script>
+<script src="state2.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser-ce/2.9.2/phaser.min.js"></script>
 </head>
 <body>
 	<script type="text/javascript">
 		var game = new Phaser.Game(300, 250, Phaser.AUTO, '',this, false, false);
 		function preload(){
-			this.load.baseURL = 'https://dionisiskon.github.io/Super-Mario/';
-			this.load.crossOrigin = 'anonymous';
+			//this.load.baseURL = 'https://dionisiskon.github.io/Super-Mario/';
+			//this.load.crossOrigin = 'anonymous';
 		}
 		var music;
 		var scoreText;
@@ -49,9 +49,12 @@ body {
 		var won;
 		var gametext;
 		var tptext;
+		var finished=false;
+		var s=1;
 
 		game.state.add('state1', state1);
-		game.state.add('splash',splash);
+		game.state.add('state2', state2);
+		game.state.add('splash', splash);
 		game.state.start('splash');
 
 		function pipesOverlap(player,pipes){
@@ -70,12 +73,17 @@ body {
 			cvalue += 1;
     		ccounter.text = 'X' + cvalue;
 			csound = game.add.audio('coinsc');
+			if(s==1){
 			score +=100;
 			scoreText.text='MARIO\n'+score;
+		}else{
+			score+=100;
+			scoreText.text='LUIGI\n'+score;
+		}
 			csound.play();
-			ckill=ckill+1;
 			coin.kill();
 		}
+
 		function pyroguyOverlap(player, pyroguy) {		
 			if (player.body.touching.down) {
 				pyroguy.animations.stop();
@@ -83,7 +91,14 @@ body {
 				pyroguy.body.enable = false;
 				player.body.velocity.y = -80;
 				stomps = game.add.audio('stomp');
-		       		stomps.play();
+		       	stomps.play();
+		       	if(s==1){
+			       score +=200;
+			       scoreText.text='MARIO\n'+score;
+				}else{
+					score+=200;
+					scoreText.text='LUIGI\n'+score;
+				}
 				game.time.events.add(Phaser.Timer.SECOND, function() {
 					pyroguy.kill();
 				});
@@ -95,18 +110,43 @@ body {
 				music.stop();
 				deaths=game.add.audio('death');
 				deaths.play();
-				if(lives>1){
+				if(lives>1 && s==1){
 					setTimeout(function(){
-				score=0;
-				cvalue=0;
-				lives-=1;
-				gokill=0;
-				ckill=0;
+					score=0;
+					cvalue=0;
+					lives-=1;
+					gokill=0;
+					ckill=0;
     		    		game.state.start('state1');
     		   		 }, 4000);
-    					} else {
+    					} else if(lives <=1 && s==1) {
 				setTimeout(function(){
-				game.state.start('splash');
+					score=0;
+		     		cvalue=0;
+					lives=3;
+					gokill=0;
+					ckill=0;
+					game.camera.fade('#000000');
+					game.state.start('splash');
+				}, 4000);}
+				else if(lives>1 && s==2){
+					setTimeout(function(){
+					score=0;
+					cvalue=0;
+					lives-=1;
+					gokill=0;
+					ckill=0;
+    		    		game.state.start('state2');
+    		   		 }, 4000);
+    					} else{
+				setTimeout(function(){
+					score=0;
+		     		cvalue=0;
+					lives=3;
+					gokill=0;
+					ckill=0;
+				   game.camera.fade('#000000');
+				   game.state.start('splash');
 				}, 4000);}
 			}
 		}
@@ -119,7 +159,9 @@ body {
 
 
 		 }
-		}	 
+		}
+	
+
 		function goombaOverlap(player, goomba) {		
 			if (player.body.touching.down) {
 				goomba.animations.stop();
@@ -127,11 +169,17 @@ body {
 				goomba.body.enable = false;
 				player.body.velocity.y = -80;
 				stomps = game.add.audio('stomp');
-		        	stomps.play();
-		        	score += 100;
-    				scoreText.text = 'MARIO\n' + score;
-    				gokill=gokill+1;
-    				gkill.text='X' + gokill; 
+		        stomps.play();
+		        	if(s==1){
+			      	score +=100;
+					scoreText.text='MARIO\n'+score;
+						}
+						else{
+
+					score+=100;
+					scoreText.text='LUIGI\n'+score;
+					} 
+
 				game.time.events.add(Phaser.Timer.SECOND, function() {
 					goomba.kill();
 				});
@@ -143,7 +191,7 @@ body {
 				music.stop();
 				deaths=game.add.audio('death');
 				deaths.play();
-				if(lives>1){
+				if(lives>1 && s==1){
 					setTimeout(function(){
 					score=0;
 					cvalue=0;
@@ -152,55 +200,78 @@ body {
 					ckill=0;
     		    		game.state.start('state1');
     		   		 }, 4000);
-    					} else {
+    					} else if(lives <=1 && s==1) {
 				setTimeout(function(){
-				game.state.start('splash');
+					score=0;
+		     		cvalue=0;
+					lives=3;
+					gokill=0;
+					ckill=0;
+					game.camera.fade('#000000');
+					game.state.start('splash');
+				}, 4000);}
+				else if(lives>1 && s==2){
+					setTimeout(function(){
+					score=0;
+					cvalue=0;
+					lives-=1;
+					gokill=0;
+					ckill=0;
+    		    		game.state.start('state2');
+    		   		 }, 4000);
+    					} else{
+				setTimeout(function(){
+					score=0;
+		     		cvalue=0;
+					lives=3;
+					gokill=0;
+					ckill=0;
+				   game.camera.fade('#000000');
+				   game.state.start('splash');
 				}, 4000);}
 			}
-		}
+			}
 		function text(){
-			wontext=game.add.text(50,50,'YOU WON!',{font:'15px Press Start 2P' ,fontSize: '20px', fill: 'white'} );
+			wontext=game.add.text(50,50,'YOU WON!',{font:'15px Press Start 2P' ,fontSize: '30px', fill: 'white'} );
 		 	wontext.fixedToCamera=true;
-        		clearc.play();
-			setTimeout(function(){
-				game.camera.fade('#000000');
-			},5000);
+				setTimeout(function(){
+					game.camera.fade('#000000');
+				},5000);
 		}
-		var played=0;
+				var played=0;
 		function flagOverlap(player,flag){
 			clearc=game.add.audio('clearc');
 			if (played==0){
-		 if (player.body.touching.up){
+				text();
 		 		music.stop();
 		 		clearc.play();
-			 	text();
+		 		played+=1;
+		 	}
+
+		 			score=0;
+		     		cvalue=0;
+					lives=3;
+					gokill=0;
+					ckill=0;
+
+		 if (player.body.touching.up){
 				setTimeout(function(){
-				game.state.start('splash');
+				game.state.start('state2');
 				}, 6000);
 			}else if (player.body.touching.right){
-				music.stop();
-				clearc.play();
-				text();
 				setTimeout(function(){
-				game.state.start('splash');
+				game.state.start('state2');
 				}, 6000);
-			}else if (player.body.touching.left){		
-				music.stop();
-				clearc.play();
-				text();
+			}else if (player.body.touching.left){
 				setTimeout(function(){
-				game.state.start('splash');
+				game.state.start('state2');
 				}, 6000);
 			}else
-				music.stop();
-				clearc.play();
-				text();
 				setTimeout(function(){
-				game.state.start('splash');
+				game.state.start('state2');
 				}, 6000);
-				played +=1;}
 
-		}
+			}
 
 
 	</script>
