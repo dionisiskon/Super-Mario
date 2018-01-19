@@ -257,6 +257,9 @@ body {
 				var played=0;
 		function flagOverlap(player,flag){
 			clearc=game.add.audio('clearc');
+			if(s==2){
+				played=0;
+			}
 			if (played==0){
 				text();
 		 		music.stop();
