@@ -23,8 +23,8 @@ body {
 	<script type="text/javascript">
 		var game = new Phaser.Game(300, 250, Phaser.AUTO, '',this, false, false);
 		function preload(){
-			this.load.baseURL = 'https://dionisiskon.github.io/Super-Mario/';
-			this.load.crossOrigin = 'anonymous';
+			//this.load.baseURL = 'https://dionisiskon.github.io/Super-Mario/';
+			//this.load.crossOrigin = 'anonymous';
 		}
 		var music;
 		var scoreText;
@@ -63,9 +63,16 @@ body {
  			player.animations.play('tp');
 			warps=game.add.audio('tps');
 			warps.play();
+			if(s==1){
  			game.time.events.add(Phaser.Timer.SECOND*1.3 , function() {
  				player.body.enable=true;
  				player.reset(1720,170);
+ 		});
+ 	}}
+ 			else if(s==2){
+ 		game.time.events.add(Phaser.Timer.SECOND*1.3 , function() {
+ 				player.body.enable=true;
+ 				player.reset(365,20);
  		});
  	}
  }
@@ -104,7 +111,11 @@ body {
 				});
 									}
 			 else {
-				player.frame = 14;
+			 	if(s==1){
+				player.frame = 14;}
+				else{
+					player.frame=6;
+				}
 				player.body.enable = false;
 				player.animations.stop();
 				music.stop();
@@ -185,7 +196,12 @@ body {
 				});
 									}
 			 else {
-				player.frame = 14;
+
+				if(s==1){
+				player.frame = 14;}
+				else{
+					player.frame=6;
+				}
 				player.body.enable = false;
 				player.animations.stop();
 				music.stop();
@@ -253,7 +269,7 @@ body {
 					lives=3;
 					gokill=0;
 					ckill=0;
-
+		if(s==1){
 		 if (player.body.touching.up){
 				setTimeout(function(){
 				game.state.start('state2');
@@ -269,9 +285,31 @@ body {
 			}else
 				setTimeout(function(){
 				game.state.start('state2');
+				}, 6000);}
+				
+
+			
+			if(s==2){
+
+				if (player.body.touching.up){
+				setTimeout(function(){
+				game.state.start('splash');
+				}, 6000);
+			}else if (player.body.touching.right){
+				setTimeout(function(){
+				game.state.start('splash');
+				}, 6000);
+			}else if (player.body.touching.left){
+				setTimeout(function(){
+				game.state.start('splash');
+				}, 6000);
+			}else
+				setTimeout(function(){
+				game.state.start('splash');
 				}, 6000);
 
 			}
+		}
 
 
 	</script>
